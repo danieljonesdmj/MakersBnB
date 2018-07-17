@@ -40,11 +40,12 @@ task :reset_dev_tables do
   confirm = STDIN.gets.chomp
   return unless confirm == 'y'
   connection = PG.connect(dbname: 'makers_bnb')
-  # connection.exec("TRUNCATE table_name, table_name;")
+  connection.exec("TRUNCATE users;")
   # add some test data, for example:
-  # han = User.create('Han Solo', 'hansolo', 'hansolo@gmail.com', 'pa$$w0rd1')
-  # luke = User.create('Luke Skywalker', 'lukeskywalker', 'lukeskywalker@gmail.com', 'pa$$w0rd2')
-  # leia = User.create('Princess Leia', 'princessleia', 'princessleia@gmail.com', 'pa$$w0rd3')
+  User.add('Daniel', 'pa$$word1')
+  User.add('Layth', 'pa$$w0rd2')
+  User.add('Eli', 'pa$$w0rd3')
+  User.add('Ben', 'pa$$w0rd4')
   # User.create('test', 'test', 'test', 'test')
   # Peep.create(han.id, 'Laugh it up fuzzball.')
   # Peep.create(luke.id, 'Im Luke Skywalker. Im here to rescue you!')
