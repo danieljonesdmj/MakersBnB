@@ -34,7 +34,7 @@ end
 
 task :reset_dev_tables do
   # resets the dev database tables when the app is launched and provides some useful dummy data
-  p "Resetting development database...type 'y' to confirm that you want to reset your data!"
+  p "Resetting development database tables...type 'y' to confirm that you want to reset your data!"
   confirm = STDIN.gets.chomp
   return unless confirm == 'y'
   connection = PG.connect(dbname: 'makers_bnb')
