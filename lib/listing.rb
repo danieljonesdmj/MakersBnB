@@ -11,6 +11,20 @@ class Listing
     result.map { |listing| listing['name'] }
   end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   private
 
   def self.switch_database
