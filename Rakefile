@@ -14,9 +14,9 @@ task :setup_databases do
     connection = PG.connect
     connection.exec("CREATE DATABASE #{database};")
     # when we know what database tables we want:
-    # connection = PG.connect(dbname: database)
+    connection = PG.connect(dbname: database)
     # connection.exec("CREATE TABLE table_name (id SERIAL PRIMARY KEY, name VARCHAR(60), username VARCHAR(60), password VARCHAR(60), email VARCHAR(100));")
-    # connection.exec("CREATE TABLE table_name (id SERIAL PRIMARY KEY, user_id INTEGER REFERENCES users(id) ON DELETE CASCADE, content VARCHAR(240), time VARCHAR(60));")
+    connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60));")
   end
 end
 
@@ -25,7 +25,7 @@ task :reset_test_tables do
   p 'Resetting database...'
   connection = PG.connect(dbname: 'makers_bnb_test')
   # clear the users and peeps tables:
-  # connection.exec("TRUNCATE table_name, table_name;")
+  connection.exec("TRUNCATE listings;")
   # add some test data, for example:
   # User.create('Han Solo', 'hansolo', 'hansolo@gmail.com', 'pa$$w0rd1')
   # User.create('Luke Skywalker', 'lukeskywalker', 'lukeskywalker@gmail.com', 'pa$$w0rd2')
@@ -38,7 +38,7 @@ task :reset_dev_tables do
   confirm = STDIN.gets.chomp
   return unless confirm == 'y'
   connection = PG.connect(dbname: 'makers_bnb')
-  # connection.exec("TRUNCATE table_name, table_name;")
+  connection.exec("TRUNCATE listings;")
   # add some test data, for example:
   # han = User.create('Han Solo', 'hansolo', 'hansolo@gmail.com', 'pa$$w0rd1')
   # luke = User.create('Luke Skywalker', 'lukeskywalker', 'lukeskywalker@gmail.com', 'pa$$w0rd2')
