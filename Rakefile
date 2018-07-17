@@ -51,7 +51,7 @@ end
 
 task :teardown do
   # deletes all databases
-  p "Deleting databases...type 'y' to confirm that you want to destroy the MakerBNB databases. This will remove all data in those databases!"
+  p "Deleting databases...type 'y' to confirm that you want to destroy the MakersBNB databases. This will remove all data in those databases!"
   confirm = STDIN.gets.chomp
   return unless confirm == 'y'
   ['makers_bnb', 'makers_bnb_test'].each do |database|
