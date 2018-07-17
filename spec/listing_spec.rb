@@ -8,6 +8,4 @@ describe Listing do
       expect(Listing.all).to include("name")
     end
   end
-  describe "" do
-    it ""
 end
