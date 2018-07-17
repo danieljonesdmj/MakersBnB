@@ -1,20 +1,20 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/ben.smith.gordon/Projects/MakersBnB/app.rb": [
+      "/Users/elishkaflint/Projects/MakersBnB/app.rb": [
         1,
         null,
         1,
         null,
         1,
-        0,
+        1,
         null,
         null,
         1,
         null,
         null
       ],
-      "/Users/ben.smith.gordon/Projects/MakersBnB/Rakefile": [
+      "/Users/elishkaflint/Projects/MakersBnB/Rakefile": [
         1,
         null,
         null,
@@ -39,10 +39,10 @@
         null,
         1,
         null,
-        0,
-        0,
+        2,
+        2,
         null,
-        0,
+        2,
         null,
         null,
         null,
@@ -77,31 +77,54 @@
         null,
         null
       ],
-      "/Users/ben.smith.gordon/Projects/MakersBnB/spec/features/testing_infrastructure_spec.rb": [
+      "/Users/elishkaflint/Projects/MakersBnB/spec/features/testing_infrastructure_spec.rb": [
         1,
         1,
-        0,
-        0,
+        1,
+        1,
         null,
         null
       ],
-      "/Users/ben.smith.gordon/Projects/MakersBnB/spec/listing_spec.rb": [
+      "/Users/elishkaflint/Projects/MakersBnB/spec/listing_spec.rb": [
         1,
         null,
         1,
         null,
-        0,
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
+        1,
+        null,
         null,
         null,
         null
       ],
-      "/Users/ben.smith.gordon/Projects/MakersBnB/lib/listing.rb": [
-
+      "/Users/elishkaflint/Projects/MakersBnB/lib/listing.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        0,
+        null,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        0,
+        null,
+        1,
+        2,
+        null,
+        null,
+        null
       ]
     },
-    "timestamp": 1531836421
+    "timestamp": 1531837277
   }
 }
