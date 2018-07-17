@@ -1,5 +1,5 @@
 require 'pg'
-# THINK I WILL NEED TO REQUIRE A FILE FROM LIB HERE
+# EF THINK I MAY NEED TO REQUIRE A FILE FROM LIB HERE?
 
 if ENV['RACK_ENV'] != 'production'
   require 'rspec/core/rake_task'
