@@ -1,4 +1,5 @@
 require 'pg'
+require './lib/user'
 # EF THINK I MAY NEED TO REQUIRE A FILE FROM LIB HERE?
 
 if ENV['RACK_ENV'] != 'production'
@@ -15,7 +16,7 @@ task :setup_databases do
     connection.exec("CREATE DATABASE #{database};")
     # when we know what database tables we want:
     connection = PG.connect(dbname: database)
-    # connection.exec("CREATE TABLE table_name (id SERIAL PRIMARY KEY, name VARCHAR(60), username VARCHAR(60), password VARCHAR(60), email VARCHAR(100));")
+    connection.exec("CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(60), password VARCHAR(60));")
     connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60));")
   end
 end
@@ -25,11 +26,12 @@ task :reset_test_tables do
   p 'Resetting database...'
   connection = PG.connect(dbname: 'makers_bnb_test')
   # clear the users and peeps tables:
-  connection.exec("TRUNCATE listings;")
+  connection.exec("TRUNCATE users, listings;")
   # add some test data, for example:
-  # User.create('Han Solo', 'hansolo', 'hansolo@gmail.com', 'pa$$w0rd1')
-  # User.create('Luke Skywalker', 'lukeskywalker', 'lukeskywalker@gmail.com', 'pa$$w0rd2')
-  # User.create('Princess Leia', 'princessleia', 'princessleia@gmail.com', 'pa$$w0rd3')
+  User.add('Daniel', 'pa$$word1')
+  User.add('Layth', 'pa$$w0rd2')
+  User.add('Eli', 'pa$$w0rd3')
+  User.add('Ben', 'pa$$w0rd4')
 end
 
 task :reset_dev_tables do
@@ -38,11 +40,12 @@ task :reset_dev_tables do
   confirm = STDIN.gets.chomp
   return unless confirm == 'y'
   connection = PG.connect(dbname: 'makers_bnb')
-  connection.exec("TRUNCATE listings;")
+  connection.exec("TRUNCATE users, listings;")
   # add some test data, for example:
-  # han = User.create('Han Solo', 'hansolo', 'hansolo@gmail.com', 'pa$$w0rd1')
-  # luke = User.create('Luke Skywalker', 'lukeskywalker', 'lukeskywalker@gmail.com', 'pa$$w0rd2')
-  # leia = User.create('Princess Leia', 'princessleia', 'princessleia@gmail.com', 'pa$$w0rd3')
+  User.add('Daniel', 'pa$$word1')
+  User.add('Layth', 'pa$$w0rd2')
+  User.add('Eli', 'pa$$w0rd3')
+  User.add('Ben', 'pa$$w0rd4')
   # User.create('test', 'test', 'test', 'test')
   # Peep.create(han.id, 'Laugh it up fuzzball.')
   # Peep.create(luke.id, 'Im Luke Skywalker. Im here to rescue you!')
