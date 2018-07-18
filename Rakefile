@@ -1,5 +1,6 @@
 require 'pg'
 require './lib/user'
+require './lib/listing'
 # EF THINK I MAY NEED TO REQUIRE A FILE FROM LIB HERE?
 
 if ENV['RACK_ENV'] != 'production'

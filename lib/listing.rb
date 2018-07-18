@@ -7,7 +7,7 @@ class Listing
     @name = name
   end
 
-  def self.create(name)
+  def self.create(name, owner_id)
     Listing.switch_database
     result = @connection.exec("INSERT INTO listings (name) VALUES('#{name}') RETURNING id, name")
     Listing.new(result.first['id'], result.first['name'])
@@ -20,6 +20,10 @@ class Listing
   end
 
   private
+
+  def ==(other)
+    @id == other.id
+  end
 
   def self.switch_database
     if ENV['ENVIRONMENT'] == 'test'

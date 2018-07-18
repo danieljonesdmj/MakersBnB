@@ -1,13 +1,15 @@
 require "listing"
+require "user"
 
 describe Listing do
 
   describe ".create" do
     it "creates a listing" do
-      Listing.create("name")
+      owner = User.new('Bill', 'password')
+      listing = Listing.create("name", owner.id)
       listings = Listing.all
       names = listings.map(&:name)
-      expect(names).to include ("name")
+      expect(names).to eq (listing)
     end
   end
 
