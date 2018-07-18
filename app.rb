@@ -8,21 +8,21 @@ class MakersBNB < Sinatra::Base
 
   get '/' do
     # Sign-in page
-    erb :index
+    erb :sign_in_page
   end
 
   get '/:id/listings' do
     # Assign user to User object
-    @user = User.find(session[:id]) # Method not written yet
+    @user = User.retrieve(session[:id]) # Method not written yet
     # Assign listings to array of listings objects
     @listings = Listing.all
     # :listings view should pull User and Listings info and show on page
     erb :listings
   end
 
-  post '/:id/session' do
+  post '/new_session' do
     # Authenticate User...
-    user = User.authenticate(params[:username, params[:password]])
+    user = User.authenticate(params[:username], params[:password])
 
     if user
       # If authentication successful, assign sesssion 'id' to this user's id.
