@@ -17,7 +17,8 @@ task :setup_databases do
     # when we know what database tables we want:
     connection = PG.connect(dbname: database)
     connection.exec("CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(60), password VARCHAR(60));")
-    connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60));")
+    connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60), owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE);")
+    connection.exec("CREATE TABLE requests (id SERIAL PRIMARY KEY, listing_id INTEGER REFERENCES listings(id) ON DELETE CASCADE, requester_id INTEGER REFERENCES users(id) ON DELETE CASCADE, is_approved BOOLEAN);")
   end
 end
 
@@ -26,12 +27,15 @@ task :reset_test_tables do
   p 'Resetting database...'
   connection = PG.connect(dbname: 'makers_bnb_test')
   # clear the users and peeps tables:
-  connection.exec("TRUNCATE users, listings;")
+  connection.exec("TRUNCATE users, listings, requests;")
   # add some test data, for example:
   User.add('Daniel', 'pa$$word1')
   User.add('Layth', 'pa$$w0rd2')
   User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
+  Listing.create('Penthouse flat in New York')
+  Listing.create('Secluded wood cabin in Sweden with Sauna')
+  Listing.create('Chateau on French Alps')
 end
 
 task :reset_dev_tables do
@@ -40,16 +44,15 @@ task :reset_dev_tables do
   confirm = STDIN.gets.chomp
   return unless confirm == 'y'
   connection = PG.connect(dbname: 'makers_bnb')
-  connection.exec("TRUNCATE users, listings;")
+  connection.exec("TRUNCATE users, listings, requests;")
   # add some test data, for example:
   User.add('Daniel', 'pa$$word1')
   User.add('Layth', 'pa$$w0rd2')
   User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
-  # User.create('test', 'test', 'test', 'test')
-  # Peep.create(han.id, 'Laugh it up fuzzball.')
-  # Peep.create(luke.id, 'Im Luke Skywalker. Im here to rescue you!')
-  # Peep.create(leia.id, 'Help me Obiwan Kenobi. Youre my only hope.')
+  Listing.create('Penthouse flat in New York')
+  Listing.create('Secluded wood cabin in Sweden with Sauna')
+  Listing.create('Chateau on French Alps')
 end
 
 task :teardown do
