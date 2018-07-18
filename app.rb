@@ -1,4 +1,6 @@
 require 'sinatra/base'
+require './lib/user'
+require './lib/listing'
 
 class MakersBNB < Sinatra::Base
 
