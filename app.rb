@@ -31,6 +31,7 @@ class MakersBNB < Sinatra::Base
     else
       # Otherwise, return to sign in page
       redirect '/'
+    end
 
     redirect '/:id/listings'
   end
