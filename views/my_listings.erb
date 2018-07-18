@@ -1,8 +1,8 @@
 <body  background="https://www.vacanceole.com/wp-content/uploads/MONT-ST-MICHEL.jpg">
 
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
-<h1> All Listings: </h1>
-<% @listings.each do |listing| %>
+<h1> Your Listings: </h1>
+<% @user_listings.each do |listing| %>
 <br><%= listing.name %></br>
 <% end %>
 

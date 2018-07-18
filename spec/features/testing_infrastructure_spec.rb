@@ -21,4 +21,14 @@ feature 'Sign In' do
     click_button('Submit')
     expect(page).to have_content 'Penthouse flat in New York'
   end
+
+  scenario 'User sees their listings' do
+    visit('/')
+    fill_in('username', :with => 'Daniel')
+    fill_in('password', :with => 'pa$$word1')
+    click_button('Submit')
+    click_button('My Listings')
+    expect(page).to_not have_content 'Chateau on French Alps'
+  end
+
 end
