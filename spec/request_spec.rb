@@ -3,8 +3,10 @@ require 'request'
 describe Request do
   describe '.create' do
     it 'should create a request with a listing_id and requester_id' do
-      request = Request.create('listing_id', 'requester_id')
-      expect(request.user_id).to eq('requester_id')
+      user = User.add('username', 'password')
+      listing = Listing.create('Holiday_Home')
+      request = Request.create(listing.id, user.id)
+      expect(request.user_id).to eq(user.id)
     end
   end
 
