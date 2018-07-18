@@ -15,8 +15,10 @@ describe Listing do
 
   describe ".name" do
     it "shows the name of a listing" do
-      listing = Listing.create("name")
-      expect(listing.name).to eq ("name")
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id)
+      listings = Listing.all
+      expect(listings).to include (listing)
     end
   end
 
