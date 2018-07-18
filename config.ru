@@ -1,8 +1,12 @@
 require 'rake'
-
 require_relative './app'
 
+# TO BE CHANGED FOR PRODUCTION!
+
 Rake.application.load_rakefile
+
+# teardown databases first:
+Rake::Task['teardown'].execute
 
 # creates the databases each time the app is launched
 Rake::Task['setup_databases'].execute
