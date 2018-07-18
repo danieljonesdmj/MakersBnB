@@ -13,7 +13,7 @@ class MakersBNB < Sinatra::Base
 
   get '/:id/listings' do
     # Assign user to User object
-    @user = User.find(session[:id])
+    @user = User.find(session[:id]) # Method not written yet
     # Assign listings to array of listings objects
     @listings = Listing.all
     # :listings view should pull User and Listings info and show on page
@@ -21,7 +21,7 @@ class MakersBNB < Sinatra::Base
   end
 
   post '/:id/session' do
-    # Authenticate User, redirect to listings...
+    # Authenticate User...
     user = User.authenticate(params[:username, params[:password]])
 
     if user
@@ -29,7 +29,7 @@ class MakersBNB < Sinatra::Base
       session[:id] = user.id
       redirect '/:id/listings'
     else
-      # Otherwise, return to sign in page
+      # Otherwise, return to sign in page.
       redirect '/'
     end
 
