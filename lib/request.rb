@@ -1,8 +1,9 @@
 class Request
 
-  attr_reader :user_id
+  attr_reader :id, :user_id, :is_approved
 
-  def initialize(listing_id, user_id, is_approved)
+  def initialize(id, listing_id, user_id, is_approved)
+    @id = id
     @listing_id = listing_id
     @user_id = user_id
     @is_approved = is_approved
@@ -10,11 +11,14 @@ class Request
 
   def self.create(listing_id, requester_id)
     Request.switch_database
-    result = @connection.exec("INSERT INTO requests (listing_id, requester_id, is_approved) VALUES ('#{listing_id}', '#{requester_id}', FALSE) RETURNING listing_id, requester_id, is_approved;")
-    Request.new(result.first['listing_id'], result.first['requester_id'], result.first['is_approved'])
+    result = @connection.exec("INSERT INTO requests (listing_id, requester_id, is_approved) VALUES ('#{listing_id}', '#{requester_id}', FALSE) RETURNING id, listing_id, requester_id, is_approved;")
+    Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['is_approved'])
   end
 
-  def self.approve
+  def self.approve(request_id)
+    Request.switch_database
+    result = @connection.exec("UPDATE requests SET is_approved = TRUE WHERE id = #{request_id} RETURNING id, listing_id, requester_id, is_approved;")
+    Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['is_approved'] == 't' ? true : false )
   end
 
   private
