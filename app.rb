@@ -12,6 +12,11 @@ class MakersBNB < Sinatra::Base
   end
 
   get '/:id/listings' do
+    # Assign user to User object
+    @user = User.find(session[:id])
+    # Assign listings to array of listings objects
+    @listings = Listing.all
+    # :listings view should pull User and Listings info and show on page
     erb :listings
   end
 
