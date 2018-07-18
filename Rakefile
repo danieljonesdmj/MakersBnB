@@ -33,6 +33,9 @@ task :reset_test_tables do
   User.add('Layth', 'pa$$w0rd2')
   User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
+  Listing.create('Penthouse flat in New York')
+  Listing.create('Secluded wood cabin in Sweden with Sauna')
+  Listing.create('Chateau on French Alps')
 end
 
 task :reset_dev_tables do
@@ -47,10 +50,9 @@ task :reset_dev_tables do
   User.add('Layth', 'pa$$w0rd2')
   User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
-  # User.create('test', 'test', 'test', 'test')
-  # Peep.create(han.id, 'Laugh it up fuzzball.')
-  # Peep.create(luke.id, 'Im Luke Skywalker. Im here to rescue you!')
-  # Peep.create(leia.id, 'Help me Obiwan Kenobi. Youre my only hope.')
+  Listing.create('Penthouse flat in New York')
+  Listing.create('Secluded wood cabin in Sweden with Sauna')
+  Listing.create('Chateau on French Alps')
 end
 
 task :teardown do
