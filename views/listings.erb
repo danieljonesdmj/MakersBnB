@@ -2,6 +2,9 @@
 
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
 
+<% @listings.each do |listing| %>
+<%= listing.name %>
+<% end %>
 
 <div style='border: 20px '>
 

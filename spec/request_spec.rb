@@ -14,7 +14,7 @@ describe Request do
   describe '.approve' do
     it 'should mark a request as approved' do
       user = User.add('username', 'password')
-      listing = Listing.create('Holiday_Home')
+      listing = Listing.create('Holiday_Home', user.id)
       request = Request.create(listing.id, user.id)
       approval = Request.approve(request.id)
       expect(approval.is_approved).to be true
