@@ -5,11 +5,11 @@ describe Listing do
 
   describe ".create" do
     it "creates a listing" do
-      owner = User.new('Bill', 'password')
+      owner = User.add('Bill', 'password')
       listing = Listing.create("name", owner.id)
       listings = Listing.all
-      names = listings.map(&:name)
-      expect(names).to eq (listing)
+      # names = listings.map(&:name)
+      expect(listings).to include (listing)
     end
   end
 
