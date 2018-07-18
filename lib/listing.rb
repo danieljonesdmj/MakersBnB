@@ -22,7 +22,7 @@ class Listing
   private
 
   def self.switch_database
-    if ENV['RACK_ENV'] == 'test'
+    if ENV['ENVIRONMENT'] == 'test'
       @connection = PG.connect(dbname: 'makers_bnb_test')
     else
       @connection = PG.connect(dbname: 'makers_bnb')
