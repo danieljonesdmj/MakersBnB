@@ -33,6 +33,12 @@ class User
     User.new(result.first['id'], result.first['username'], result.first['password'])
   end
 
+  def self.retrieve(id)
+    User.switch_database
+    result = @connection.exec("SELECT * FROM users WHERE id = '#{id}'")
+    User.new(result.first['id'], result.first['username'], result.first['password'])
+  end
+
   def ==(username)
     @username == username.username
   end
