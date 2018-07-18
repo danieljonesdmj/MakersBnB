@@ -1,0 +1,10 @@
+body {
+    background: url(https://www.aboutaustralia.com/wp-content/uploads/2015/08/Sydney-Opera-House-Australia.jpg);
+    background-size: cover;
+}
+h1 {
+    color: #ff0066 ;
+}
+h4 {
+    color: yellow;
+}
