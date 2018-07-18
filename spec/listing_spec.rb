@@ -22,4 +22,12 @@ describe Listing do
     end
   end
 
+  describe ".user_listings" do
+    it "can return all listings for a specific user id " do
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id)
+      expect(Listing.user_listings(owner.id)).to include listing
+    end
+  end
+
 end

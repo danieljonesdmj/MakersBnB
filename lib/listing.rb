@@ -20,6 +20,12 @@ class Listing
     result.map { |listing| Listing.new(listing['id'], listing['name'], listing['owner_id']) }
   end
 
+  def self.user_listings(owner_id)
+    Listing.switch_database
+    result = @connection.exec("SELECT * FROM listings WHERE owner_id='#{owner_id}'")
+    result.map { |listing| Listing.new(listing['id'], listing['name'], listing['owner_id']) }
+  end
+
   private
 
   def ==(other)
