@@ -1,20 +1,32 @@
 require "listing"
+require "user"
 
 describe Listing do
 
   describe ".create" do
     it "creates a listing" do
-      Listing.create("name")
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id)
       listings = Listing.all
-      names = listings.map(&:name)
-      expect(names).to include ("name")
+      # names = listings.map(&:name)
+      expect(listings).to include (listing)
     end
   end
 
   describe ".name" do
     it "shows the name of a listing" do
-      listing = Listing.create("name")
-      expect(listing.name).to eq ("name")
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id)
+      listings = Listing.all
+      expect(listings).to include (listing)
+    end
+  end
+
+  describe ".user_listings" do
+    it "can return all listings for a specific user id " do
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id)
+      expect(Listing.user_listings(owner.id)).to include listing
     end
   end
 

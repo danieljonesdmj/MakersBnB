@@ -1,5 +1,6 @@
 require 'pg'
 require './lib/user'
+require './lib/listing'
 # EF THINK I MAY NEED TO REQUIRE A FILE FROM LIB HERE?
 
 if ENV['RACK_ENV'] != 'production'
@@ -29,13 +30,13 @@ task :reset_test_tables do
   # clear the users and peeps tables:
   connection.exec("TRUNCATE users, listings, requests;")
   # add some test data, for example:
-  User.add('Daniel', 'pa$$word1')
-  User.add('Layth', 'pa$$w0rd2')
-  User.add('Eli', 'pa$$w0rd3')
+  user1 = User.add('Daniel', 'pa$$word1')
+  user2 = User.add('Layth', 'pa$$w0rd2')
+  user3 = User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
-  Listing.create('Penthouse flat in New York')
-  Listing.create('Secluded wood cabin in Sweden with Sauna')
-  Listing.create('Chateau on French Alps')
+  Listing.create('Penthouse flat in New York', user1.id)
+  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id)
+  Listing.create('Chateau on French Alps', user3.id)
 end
 
 task :reset_dev_tables do
@@ -46,13 +47,13 @@ task :reset_dev_tables do
   connection = PG.connect(dbname: 'makers_bnb')
   connection.exec("TRUNCATE users, listings, requests;")
   # add some test data, for example:
-  User.add('Daniel', 'pa$$word1')
-  User.add('Layth', 'pa$$w0rd2')
-  User.add('Eli', 'pa$$w0rd3')
+  user1 = User.add('Daniel', 'pa$$word1')
+  user2 = User.add('Layth', 'pa$$w0rd2')
+  user3 = User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
-  Listing.create('Penthouse flat in New York')
-  Listing.create('Secluded wood cabin in Sweden with Sauna')
-  Listing.create('Chateau on French Alps')
+  Listing.create('Penthouse flat in New York', user1.id)
+  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id)
+  Listing.create('Chateau on French Alps', user3.id)
 end
 
 task :teardown do

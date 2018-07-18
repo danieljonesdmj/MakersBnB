@@ -13,4 +13,8 @@ feature 'Sign In' do
     click_button('Submit')
     expect(page).to have_content 'Welcome, Daniel'
   end
+
+  scenario 'User sees their listings' do
+
+  end
 end
