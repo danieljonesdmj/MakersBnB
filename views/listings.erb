@@ -4,15 +4,13 @@
 <h1> All Listings: </h1>
 <% @listings.each do |listing| %>
 <% if listing.owner_id == @user.id %>
-<br><h3><%= listing.name %> (your space)</h3></br>
+<h3><%= listing.name %> (your space)</h3>
 <% else %>
-<br>
-<h3><%= listing.name %></h3>
-<h3><%= listing.description %></h3>
-<h3><%= listing.price %></h3>
-<h3><%= listing.owner_id %></h3>
 
-</br>
+<h3><u><%= listing.name %></u></h3>
+<h4>Description: <%= listing.description %></h4>
+<h4>Price Per Night: £<%= listing.price %></h4>
+<h4>Host: <%= (User.retrieve(listing.owner_id)).username %></h4>
 
 <form action='/<%= listing.id %>/request' method='POST'>
   <input type='hidden' name='_method' value='PATCH'>
