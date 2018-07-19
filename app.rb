@@ -11,7 +11,7 @@ class MakersBNB < Sinatra::Base
     erb :sign_in_page
   end
 
-  get '/:id/all_listings' do
+  get '/all_listings' do
     # Assign user to User object
     @user = User.retrieve(session[:id]) # Method not written yet
     # Assign listings to array of listings objects
@@ -20,7 +20,7 @@ class MakersBNB < Sinatra::Base
     erb :listings
   end
 
-  get '/:id/my_listings' do
+  get '/my_listings' do
     @user = User.retrieve(session[:id])
     @user_listings = Listing.user_listings(session[:id])
     erb :my_listings
@@ -33,12 +33,17 @@ class MakersBNB < Sinatra::Base
     if user
       # If authentication successful, assign sesssion 'id' to this user's id.
       session[:id] = user.id
-      redirect '/:id/all_listings'
+      redirect '/all_listings'
     else
       # Otherwise, return to sign in page.
       redirect '/'
     end
 
+  end
+
+  post '/add_listing' do
+    listing = Listing.create(params[:name], session[:id])
+    redirect ('/all_listings')
   end
 
   run! if app_file == $0
