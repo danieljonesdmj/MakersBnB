@@ -6,7 +6,7 @@
 <br><%= listing.name %></br>
 <% end %>
 
-<form action='/my_listings' method='GET'>
+<form action='/<%= @user.id %>/my_listings' method='GET'>
   <input type='submit' value='My Listings'>
 </form>
 
