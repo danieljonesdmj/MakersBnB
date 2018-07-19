@@ -43,7 +43,13 @@ class MakersBNB < Sinatra::Base
 
   post '/add_listing' do
     listing = Listing.create(params[:name], session[:id])
-    redirect ('/all_listings')
+    redirect ("/#{session[:id]}/all_listings")
+  end
+
+  post '/new_user' do
+    user = User.add(params[:new_username], params[:new_password])
+    session[:id] = user.id
+    redirect "/#{user.id}/all_listings"
   end
 
   run! if app_file == $0
