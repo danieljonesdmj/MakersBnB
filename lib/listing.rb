@@ -1,3 +1,5 @@
+require_relative 'request'
+
 class Listing
 
   attr_reader :id, :name
@@ -11,7 +13,13 @@ class Listing
   def self.create(name, owner_id)
     Listing.switch_database
     result = @connection.exec("INSERT INTO listings (name, owner_id) VALUES('#{name}', '#{owner_id}') RETURNING id, name, owner_id")
-    Listing.new(result.first['id'], result.first['name'], result.first['owner_id'])
+
+    listing = Listing.new(result.first['id'], result.first['name'], result.first['owner_id'])
+
+    # create request object
+
+    Request.create(listing.id)
+    listing
   end
 
   def self.all
@@ -39,8 +47,8 @@ class Listing
     Listing.new(result.first['id'], result.first['name'], result.first['owner_id'])
   end
 
-  private
-
+  # private
+  #
   def ==(other)
     @id == other.id
   end

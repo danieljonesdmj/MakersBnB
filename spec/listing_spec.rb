@@ -1,5 +1,6 @@
 require "listing"
 require "user"
+require "request"
 
 describe Listing do
 
@@ -11,6 +12,12 @@ describe Listing do
       # names = listings.map(&:name)
       expect(listings).to include (listing)
     end
+
+    # it 'creates a request object each time' do
+    #   owner = User.add('Bill', 'password')
+    #   listing = Listing.create("name", owner.id)
+    #   expect(Request.available).to include listing
+    # end
   end
 
   describe ".name" do
@@ -27,10 +34,6 @@ describe Listing do
       owner = User.add('Bill', 'password')
       listing = Listing.create("name", owner.id)
       expect(Listing.user_listings(owner.id)).to include listing
-    end
-
-    it "can return all listings for a specific user id that are not requested" do
-
     end
   end
 
