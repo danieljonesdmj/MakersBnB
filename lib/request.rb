@@ -1,6 +1,6 @@
 class Request
 
-  attr_reader :id, :user_id, :is_approved, :listing_id
+  attr_reader :id, :user_id, :is_approved, :listing_id, :host_id
 
   def initialize(id, listing_id, user_id, is_requested, is_approved)
     @id = id
@@ -10,9 +10,9 @@ class Request
     @is_requested = is_requested
   end
 
-  def self.create(listing_id)
+  def self.create(listing_id, host_id)
     Request.switch_database
-    result = @connection.exec("INSERT INTO requests (listing_id, is_requested, is_approved) VALUES ('#{listing_id}', FALSE, FALSE) RETURNING id, listing_id, requester_id, is_requested, is_approved;")
+    result = @connection.exec("INSERT INTO requests (listing_id, host_id, is_requested, is_approved) VALUES ('#{listing_id}', '#{host_id}', FALSE, FALSE) RETURNING id, listing_id, requester_id, is_requested, is_approved;")
     Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['is_requested'], result.first['is_approved'] == 't' ? true : false )
   end
 
@@ -33,6 +33,18 @@ class Request
     Request.switch_database
     result = @connection.exec("SELECT * FROM requests WHERE is_requested=FALSE")
     result.map {|request| Request.new(request['id'], request['listing_id'], request['user_id'], request['is_requested'], request['is_approved'])}
+  end
+
+  def self.my_requests(user_id)
+    Request.switch_database
+    result = @connection.exec("SELECT * FROM requests WHERE host_id='#{user_id}'")
+    Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['is_requested'], result.first['is_approved'])
+  end
+
+  def self.return_request(listing_id)
+    Request.switch_database
+    result = @connection.exec("SELECT * FROM requests WHERE listing_id='#{listing_id}'")
+    Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['is_requested'], result.first['is_approved'])
   end
 
   private

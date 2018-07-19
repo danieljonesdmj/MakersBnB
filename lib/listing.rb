@@ -18,7 +18,7 @@ class Listing
 
     # create request object
 
-    Request.create(listing.id)
+    Request.create(listing.id, owner_id)
     listing
   end
 

@@ -16,7 +16,7 @@ feature 'View All Listings' do
     fill_in('name', :with => 'House in The Wirral')
     click_button('Add Listing')
     click_button('All Listings')
-    expect(page).to have_no_content 'House in The Wirral'
+    expect(page).to have_content 'House in The Wirral (your space)'
   end
 
   scenario 'User sees their listings' do

@@ -32,6 +32,7 @@ class MakersBNB < Sinatra::Base
   get '/:id/my_listings' do
     @user = User.retrieve(session[:id])
     @user_listings = Listing.user_listings(session[:id])
+    @requests = Request.my_requests(@user.id)
     erb :my_listings
   end
 
