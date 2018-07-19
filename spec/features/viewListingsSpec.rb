@@ -32,7 +32,7 @@ feature 'View All Listings'
     fill_in('password', :with => 'pa$$word1')
     click_button('Submit')
     click_button('My Listings')
-    fill_in('name', :with => 'House in The Wirrell')
+    fill_in('name', :with => 'House in The Wirral')
     click_button('Add Listing')
     expect(page).to have_content 'House in The Wirral'
   end
