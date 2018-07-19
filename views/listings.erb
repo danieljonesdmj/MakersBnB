@@ -4,6 +4,11 @@
 <h1> All Listings: </h1>
 <% @listings.each do |listing| %>
 <br><%= listing.name %></br>
+<form action='/<%= listing.id %>/request' method='POST'>
+  <input type='hidden' name='_method' value='PATCH'>
+  <input type='hidden' name='listing_id' value='<%= listing.id %>'>
+  <input type='submit' value='Request'>
+</form>
 <% end %>
 
 <form action='/<%= @user.id %>/my_listings' method='GET'>

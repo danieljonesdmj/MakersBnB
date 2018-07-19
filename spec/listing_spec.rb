@@ -30,4 +30,13 @@ describe Listing do
     end
   end
 
+  describe '.retrieve_listing' do
+    it 'returns and wraps a specific listing by id' do
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id)
+      retrieved_listing = Listing.retrieve_listing(listing.id)
+      expect(retrieved_listing.id).to eq listing.id
+  end
+  end
+
 end

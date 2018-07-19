@@ -15,15 +15,19 @@ class MakersBNB < Sinatra::Base
     # Assign user to User object
     @user = User.retrieve(session[:id]) # Method not written yet
     # Assign listings to array of listings objects
-    @listings = Listing.retrieve(session[:id])
+    @listings = Listing.retrieve_other(session[:id])
     # :listings view should pull User and Listings info and show on page
     erb :listings
   end
 
   get '/:id/my_listings' do
-    @user = User.retrieve(session[:id])
+    @user = User.retrieve_other(session[:id])
     @user_listings = Listing.user_listings(session[:id])
     erb :my_listings
+  end
+
+  get '/:id/confirm_request' do
+    erb :confirm_request
   end
 
   post '/new_session' do
@@ -39,6 +43,11 @@ class MakersBNB < Sinatra::Base
       redirect '/'
     end
 
+  end
+
+  patch '/:id/request' do
+    listing = Listing.retrieve_listing(params[:listing_id])
+    redirect "/'#{listing.id}'/confirm_request"
   end
 
   post '/add_listing' do
