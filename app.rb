@@ -17,8 +17,14 @@ class MakersBNB < Sinatra::Base
     @user = User.retrieve(session[:id]) # Method not written yet
     # Assign listings to array of available listings...
     # @listings = Listing.retrieve_other(session[:id])
-    p requests = Request.available
-    @listings = requests.map { |request| Listing.retrieve_listing(request.listing_id) }
+    requests = Request.available
+    # available_requests = []
+    # requests.each {|request|
+    #    if request.user_id != @user.id
+    #      available_requests.push(request)
+    #    end
+    # }
+    @listings= requests.map {|request| Listing.retrieve_listing(request.listing_id)}
     # :listings view should pull User and Listings info and show on page
     erb :listings
   end

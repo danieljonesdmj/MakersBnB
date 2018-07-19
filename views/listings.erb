@@ -3,12 +3,17 @@
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
 <h1> All Listings: </h1>
 <% @listings.each do |listing| %>
+<% if listing.owner_id == @user.id %>
+<br><%= listing.name %> (your space)</br>
+<% else %>
 <br><%= listing.name %></br>
+
 <form action='/<%= listing.id %>/request' method='POST'>
   <input type='hidden' name='_method' value='PATCH'>
   <input type='hidden' name='listing_id' value='<%= listing.id %>'>
   <input type='submit' value='Request'>
 </form>
+<% end %>
 <% end %>
 
 <form action='/<%= @user.id %>/my_listings' method='GET'>

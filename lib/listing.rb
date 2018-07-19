@@ -2,7 +2,7 @@ require_relative 'request'
 
 class Listing
 
-  attr_reader :id, :name
+  attr_reader :id, :name, :owner_id
 
   def initialize(id, name, owner_id)
     @id = id
