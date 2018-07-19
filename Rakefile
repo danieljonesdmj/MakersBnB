@@ -18,7 +18,7 @@ task :setup_databases do
     # when we know what database tables we want:
     connection = PG.connect(dbname: database)
     connection.exec("CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(60), password VARCHAR(60));")
-    connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60), owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE);")
+    connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60), owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE, description VARCHAR(200), price INTEGER);")
     connection.exec("CREATE TABLE requests (id SERIAL PRIMARY KEY, listing_id INTEGER REFERENCES listings(id) ON DELETE CASCADE, requester_id INTEGER REFERENCES users(id) ON DELETE CASCADE, is_approved BOOLEAN);")
   end
 end
@@ -34,9 +34,9 @@ task :reset_test_tables do
   user2 = User.add('Layth', 'pa$$w0rd2')
   user3 = User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
-  Listing.create('Penthouse flat in New York', user1.id)
-  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id)
-  Listing.create('Chateau on French Alps', user3.id)
+  Listing.create('Penthouse flat in New York', user1.id, 'Sip a cocktail in front of the Manhattan skyline', 200)
+  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id, 'Switch off, relax and live the hygge dream', 100)
+  Listing.create('Chateau on French Alps', user3.id, 'Skiing by day, vintage wines by night', 150)
 end
 
 task :reset_dev_tables do
@@ -51,9 +51,9 @@ task :reset_dev_tables do
   user2 = User.add('Layth', 'pa$$w0rd2')
   user3 = User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
-  Listing.create('Penthouse flat in New York', user1.id)
-  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id)
-  Listing.create('Chateau on French Alps', user3.id)
+  Listing.create('Penthouse flat in New York', user1.id, 'Sip a cocktail in front of the Manhattan skyline', 200)
+  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id, 'Switch off, relax and live the hygge dream', 100)
+  Listing.create('Chateau on French Alps', user3.id, 'Skiing by day, vintage wines by night', 150)
 end
 
 task :teardown do
