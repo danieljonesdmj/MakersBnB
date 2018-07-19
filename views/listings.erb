@@ -1,0 +1,12 @@
+<h1>Listings</h1>
+
+<form action="/listings" method=post>
+  <input type="text" name="name">
+  <input type="submit" value="Create">
+</form>
+
+<ul>
+  <% @listings.each do |list| %>
+    <li><%= list.name %></li>
+  <% end %>
+</ul>

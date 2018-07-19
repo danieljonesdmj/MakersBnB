@@ -11,6 +11,22 @@ class MakersBNB < Sinatra::Base
     erb :index
   end
 
+  get '/listings' do
+    # gets all listings from db and assigns to instance variable
+    @listings = Listing.all
+
+    # template to display
+    erb :listings
+  end
+
+   post '/listings' do
+    # create listing with params of name
+    Listing.create(params[:name])
+
+    # redirect back to listing page
+    redirect '/listings'
+  end
+
   get '/:id/listings' do
     # Assign user to User object
     @user = User.find(session[:id]) # Method not written yet
