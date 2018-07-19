@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require './lib/user'
 require './lib/listing'
+require './lib/request'
 
 class MakersBNB < Sinatra::Base
   set :method_override, true
@@ -14,19 +15,22 @@ class MakersBNB < Sinatra::Base
   get '/:id/all_listings' do
     # Assign user to User object
     @user = User.retrieve(session[:id]) # Method not written yet
-    # Assign listings to array of listings objects
+    # Assign listings to array of available listings...
     @listings = Listing.retrieve_other(session[:id])
+    # requests = Request.retrieve_available
+    # @listings = requests.map { |request| Listing.retrieve_listing(request.id) }
     # :listings view should pull User and Listings info and show on page
     erb :listings
   end
 
   get '/:id/my_listings' do
-    @user = User.retrieve_other(session[:id])
+    @user = User.retrieve(session[:id])
     @user_listings = Listing.user_listings(session[:id])
     erb :my_listings
   end
 
   get '/:id/confirm_request' do
+    @user = User.retrieve(session[:id])
     erb :confirm_request
   end
 
@@ -47,6 +51,7 @@ class MakersBNB < Sinatra::Base
 
   patch '/:id/request' do
     listing = Listing.retrieve_listing(params[:listing_id])
+    request = Request.create(params[:listing_id], session[:id])
     redirect "/'#{listing.id}'/confirm_request"
   end
 

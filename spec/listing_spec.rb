@@ -28,6 +28,10 @@ describe Listing do
       listing = Listing.create("name", owner.id)
       expect(Listing.user_listings(owner.id)).to include listing
     end
+
+    it "can return all listings for a specific user id that are not requested" do
+
+    end
   end
 
   describe '.retrieve_listing' do

@@ -9,6 +9,10 @@ describe Request do
       request = Request.create(listing.id, user.id)
       expect(request.user_id).to eq(user.id)
     end
+
+    describe '.create' do
+
+    end
   end
 
   describe '.approve' do
@@ -20,4 +24,5 @@ describe Request do
       expect(approval.is_approved).to be true
     end
   end
+
 end
