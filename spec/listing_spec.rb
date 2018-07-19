@@ -17,8 +17,7 @@ describe Listing do
     it "shows the name of a listing" do
       owner = User.add('Bill', 'password')
       listing = Listing.create("name", owner.id)
-      listings = Listing.all
-      expect(listings).to include (listing)
+      expect(listing.name).to eq "name"
     end
   end
 
@@ -27,6 +26,22 @@ describe Listing do
       owner = User.add('Bill', 'password')
       listing = Listing.create("name", owner.id)
       expect(Listing.user_listings(owner.id)).to include listing
+    end
+  end
+
+  describe ".description" do
+    it "shows the description of a listing" do
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id, "description", "price")
+      expect(listing.description).to eq "description"
+    end
+  end
+
+  describe ".price" do
+    it "shows the description of a listing" do
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id, "description", "price")
+      expect(listing.price).to eq "price"
     end
   end
 
