@@ -26,6 +26,13 @@ class Listing
     result.map { |listing| Listing.new(listing['id'], listing['name'], listing['owner_id']) }
   end
 
+  def self.retrieve(owner_id)
+    # retrieves all listings except those the owner is hosting
+    Listing.switch_database
+    result = @connection.exec("SELECT * FROM listings WHERE owner_id!='#{owner_id}'")
+    result.map { |listing| Listing.new(listing['id'], listing['name'], listing['owner_id'])}
+  end
+
   private
 
   def ==(other)

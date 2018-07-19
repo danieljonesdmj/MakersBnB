@@ -15,7 +15,7 @@ class MakersBNB < Sinatra::Base
     # Assign user to User object
     @user = User.retrieve(session[:id]) # Method not written yet
     # Assign listings to array of listings objects
-    @listings = Listing.all
+    @listings = Listing.retrieve(session[:id])
     # :listings view should pull User and Listings info and show on page
     erb :listings
   end
@@ -43,13 +43,13 @@ class MakersBNB < Sinatra::Base
 
   post '/add_listing' do
     listing = Listing.create(params[:name], session[:id])
-    redirect ("/#{session[:id]}/all_listings")
+    redirect ("/#{session[:id]}/my_listings")
   end
 
   post '/new_user' do
     user = User.add(params[:new_username], params[:new_password])
     session[:id] = user.id
-    redirect "/#{user.id}/all_listings"
+    redirect "/#{user.id}/my_listings"
   end
 
   run! if app_file == $0
