@@ -29,10 +29,6 @@ describe Request do
       my_requests = Request.my_requests(user.id)
       expect(my_requests.first.id).to eq request.id
     end
-
-    it 'should return many requests made on the users space' do
-
-    end
   end
 
   describe '.return_request' do
@@ -41,6 +37,16 @@ describe Request do
       listing = Listing.create('Holiday_Home', user.id)
       request = Request.return_request(listing.id)
       expect(request.listing_id).to eq listing.id
+    end
+  end
+
+  describe '.reject' do
+    it 'rejects a request' do
+      user = User.add('username', 'password')
+      listing = Listing.create('Holiday_Home', user.id)
+      request = Request.return_request(listing.id)
+      rejection = Request.reject(request.id)
+      expect(rejection.id).to eq request.id
     end
   end
 

@@ -47,6 +47,11 @@ class MakersBNB < Sinatra::Base
     erb :confirm_approve
   end
 
+  get '/:id/reject' do
+    @user = User.retrieve(session[:id])
+    erb :confirm_reject
+  end
+
   post '/new_session' do
     # Authenticate User...
     user = User.authenticate(params[:username], params[:password])
@@ -60,6 +65,11 @@ class MakersBNB < Sinatra::Base
       redirect '/'
     end
 
+  end
+
+  patch '/:id/reject' do
+    Request.reject(params[:request_id])
+    redirect("/'#{params[:request_id]}'/reject")
   end
 
   patch '/:id/approve' do

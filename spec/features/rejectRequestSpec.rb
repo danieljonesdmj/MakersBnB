@@ -1,5 +1,5 @@
-feature 'Approve Request' do
-  scenario 'User approves a request' do
+feature 'Reject Request' do
+  scenario 'User rejects a request' do
     visit('/')
     fill_in('username', :with => 'Daniel')
     fill_in('password', :with => 'pa$$word1')
@@ -13,6 +13,7 @@ feature 'Approve Request' do
     click_button('My Listings')
     click_button('Reject')
     click_button('Back to My Listings')
-    expect(page).to have_content '(approved)'
+    click_button('All Listings')
+    expect(page).to have_content 'Secluded wood cabin in Sweden with Sauna'
   end
 end

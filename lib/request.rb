@@ -29,6 +29,12 @@ class Request
     Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['host_id'], result.first['is_requested'], result.first['is_approved'])
   end
 
+  def self.reject(request_id)
+    Request.switch_database
+    result = @connection.exec("UPDATE requests SET is_approved = FALSE, is_requested = FALSE WHERE id = #{request_id} RETURNING id, listing_id, requester_id, host_id, is_requested, is_approved;")
+    Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['host_id'], result.first['is_requested'], result.first['is_approved'])
+  end
+
   def self.available
     # returns all available listings
     Request.switch_database
@@ -39,11 +45,7 @@ class Request
   def self.my_requests(user_id)
     Request.switch_database
     result = @connection.exec("SELECT * FROM requests WHERE host_id='#{user_id}'")
-    # if result.length > 1
-      result.map {|request| Request.new(request['id'], request['listing_id'], request['requester_id'], request['host_id'], request['is_requested'], request['is_approved'])}
-    # else
-    #   Request.new(result.first['id'],result.first['listing_id'], result.first['requester_id'], result.first['host_id'], result.first['is_requested'], result.first['is_approved'])
-    # end
+    result.map {|request| Request.new(request['id'], request['listing_id'], request['requester_id'], request['host_id'], request['is_requested'], request['is_approved'])}
   end
 
   def self.return_request(listing_id)
