@@ -1,30 +1,4 @@
-
-feature 'Homepage' do
-  scenario 'Test infrastructure works' do
-    visit ('/')
-    expect(page).to have_content 'Welcome to MakersBnB'
-  end
-end
-
-feature 'Sign Up' do
-  scenario 'User makes new account' do
-    visit('/')
-    fill_in('new_username', :with => 'Cristiano')
-    fill_in('new_password', :with => 'Juve')
-    click_button('Create Account')
-    expect(page).to have_content 'Welcome, Cristiano'
-  end
-end
-
-feature 'Sign In' do
-  scenario 'User signs in' do
-    visit('/')
-    fill_in('username', :with => 'Daniel')
-    fill_in('password', :with => 'pa$$word1')
-    click_button('Submit')
-    expect(page).to have_content 'Welcome, Daniel'
-  end
-
+feature 'View All Listings'
   scenario 'User sees all listings' do
     visit('/')
     fill_in('username', :with => 'Daniel')
@@ -62,4 +36,3 @@ feature 'Sign In' do
     click_button('Add Listing')
     expect(page).to have_content 'House in The Wirrell'
   end
-end
