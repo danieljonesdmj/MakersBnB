@@ -34,5 +34,5 @@ feature 'View All Listings'
     click_button('My Listings')
     fill_in('name', :with => 'House in The Wirrell')
     click_button('Add Listing')
-    expect(page).to have_content 'House in The Wirrell'
+    expect(page).to have_content 'House in The Wirral'
   end
