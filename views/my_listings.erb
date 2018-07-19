@@ -1,18 +1,20 @@
 <body  background="https://www.vacanceole.com/wp-content/uploads/MONT-ST-MICHEL.jpg">
 
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
-<h1> All Listings: </h1>
-<% @listings.each do |listing| %>
+<h1> Your Listings: </h1>
+<% @user_listings.each do |listing| %>
 <br><%= listing.name %></br>
 <% end %>
 
-<form action='/<%= @user.id %>/my_listings' method='GET'>
-  <input type='submit' value='My Listings'>
+<form action='/<%= @user.id %>/all_listings' method='GET'>
+  <input type='submit' value='All Listings'>
 </form>
 
-<form action='/' method='GET'>
-  <input type='submit' value='Sign Out'>
+<form action='/add_listing' method='POST'>
+  <input type='text' name='name'>
+  <input type='submit' value='Add Listing'>
 </form>
+
 <div style='border: 20px '>
 
 </div>

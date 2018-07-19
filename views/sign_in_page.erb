@@ -2,7 +2,7 @@
 
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome to MakersBnB </h1> </span>
 
-<h2> To get set up and staying in the home of your dreams, please create a username and password below.</h2>
+<h2> To get set up and staying in the home of your dreams, please sign in below.</h2>
 
 <form action="/new_session" method="post">
   <h4>Username:</h4>
@@ -12,6 +12,16 @@
 
   <input type="submit" value="Submit">
 </form>
+
+<h2> To Create a New Account, please fill in your details below: </h1>
+  <form action="/new_user" method="post">
+  <h4> Username: </h4>
+  <input type='text' name='new_username'>
+  <h4> Password: </h4>
+  <input type='text' name='new_password'>
+  <input type='submit' value='Create Account'>
+</form>
+
 
 <div style='border: 20px '>
 
