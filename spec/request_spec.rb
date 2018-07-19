@@ -2,10 +2,18 @@ require 'request'
 
 describe Request do
 
-  describe '.create' do
+  describe '.create' do  
     it 'should create a request with a listing_id and requester_id' do
+      listing = Listing.create('Holiday_Home', user.id, 'description', 100)
+      request = Request.create(listing.id, user.id)
+      expect(request.user_id).to eq(user.id)
+    end
+  end
+  
+  describe '.available' do
+    it 'should create a request automatically when created' do
       user = User.add('username', 'password')
-      listing = Listing.create('Holiday_Home', user.id)
+      listing = Listing.create('Holiday_Home', user.id, 'description', 100)
       expect(Request.available).to include (listing)
     end
   end
@@ -13,8 +21,8 @@ describe Request do
   describe '.approve' do
     it 'should mark a request as approved' do
       user = User.add('username', 'password')
-      listing = Listing.create('Holiday_Home', user.id)
-      request = Request.return_request(listing.id)
+      listing = Listing.create('Holiday_Home', user.id, 'description', 100)
+      request = Request.create(listing.id, user.id)
       approval = Request.approve(request.id)
       expect(approval.id).to eq request.id
     end
