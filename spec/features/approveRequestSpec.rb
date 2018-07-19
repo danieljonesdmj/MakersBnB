@@ -11,6 +11,8 @@ feature 'Approve Request' do
     fill_in('password', :with => 'pa$$w0rd2')
     click_button('Submit')
     click_button('My Listings')
-    expect(page).to have_button('Approve')
+    click_button('Approve')
+    click_button('Back to My Listings')
+    expect(page).to have_content '(approved)'
   end
 end

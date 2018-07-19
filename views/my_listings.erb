@@ -6,8 +6,19 @@
 <br><%= listing.name %></br>
 <% end %>
 
-<h1> Requests: </h1>
-
+<h1> Your Requests: </h1>
+<% @my_requests.each do |request| %>
+  <% if (Request.return_request(request.id)).is_approved == "t" %>
+    <%= request.name %> (approved)
+  <% else %>
+    <%= request.name %>
+    <form action='/<%= request.id %>/approve' method='POST'>
+      <input type='hidden' name='_method' value='PATCH'>
+      <input type='hidden' name='request_id' value='<%= request.id %>'>
+      <input type='submit' value='Approve'>
+    </form>
+  <% end %>
+<% end %>
 
 <form action='/<%= @user.id %>/all_listings' method='GET'>
   <input type='submit' value='All Listings'>

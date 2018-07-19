@@ -32,13 +32,19 @@ class MakersBNB < Sinatra::Base
   get '/:id/my_listings' do
     @user = User.retrieve(session[:id])
     @user_listings = Listing.user_listings(session[:id])
-    @requests = Request.my_requests(@user.id)
+    requests = Request.my_requests(@user.id)
+    @my_requests = requests.map {|request| Listing.retrieve_listing(request.listing_id)}
     erb :my_listings
   end
 
   get '/:id/confirm_request' do
     @user = User.retrieve(session[:id])
     erb :confirm_request
+  end
+
+  get '/:id/approve' do
+    @user = User.retrieve(session[:id])
+    erb :confirm_approve
   end
 
   post '/new_session' do
@@ -56,11 +62,17 @@ class MakersBNB < Sinatra::Base
 
   end
 
+  patch '/:id/approve' do
+    p id = params[:request_id]
+    Request.approve(id)
+    redirect("/'#{params[:request_id]}'/approve")
+  end
+
   patch '/:id/request' do
     params[:listing_id]
     user = User.retrieve(session[:id])
     listing = Listing.retrieve_listing(params[:listing_id])
-    p request = Request.make_request(params[:listing_id], user.id)
+    request = Request.make_request(params[:listing_id], user.id)
     # p Request.make_request(listing.id, user.id)
     redirect "/'#{listing.id}'/confirm_request"
   end

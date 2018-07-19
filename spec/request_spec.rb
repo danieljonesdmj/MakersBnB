@@ -16,18 +16,21 @@ describe Request do
       listing = Listing.create('Holiday_Home', user.id)
       request = Request.return_request(listing.id)
       approval = Request.approve(request.id)
-      expect(approval.is_approved).to be true
+      expect(approval.id).to eq request.id
     end
   end
 
   describe '.my_requests' do
-    it 'should return any requests made on the users space' do
+    it 'should return a request made on the users space' do
       user = User.add('username', 'password')
       user2 = User.add('user2', 'password')
       listing = Listing.create('Holiday_Home', user.id)
       request = Request.make_request(listing.id, user2.id)
       my_requests = Request.my_requests(user.id)
-      expect(my_requests.id).to eq request.id
+      expect(my_requests.first.id).to eq request.id
+    end
+
+    it 'should return many requests made on the users space' do
 
     end
   end
