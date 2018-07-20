@@ -39,11 +39,11 @@ describe Listing do
   describe '.retrieve_listing' do
     it 'returns and wraps a specific listing by id' do
       owner = User.add('Bill', 'password')
-      listing = Listing.create("name", owner.id)
+      listing = Listing.create("name", owner.id, 'description', 123)
       retrieved_listing = Listing.retrieve_listing(listing.id)
       expect(retrieved_listing.id).to eq listing.id
   end
-    
+
   describe ".description" do
     it "shows the description of a listing" do
       owner = User.add('Bill', 'password')
@@ -58,7 +58,16 @@ describe Listing do
       listing = Listing.create("name", owner.id, "description", 100)
       expect(listing.price).to eq '100'
     end
-
   end
 
+  describe '#available_dates' do
+    it 'returns available dates of a listing' do
+      owner = User.add('Bill', 'password')
+      listing = Listing.create("name", owner.id, "description", 100)
+      date = Date.create('1/1/1')
+      ListingsDates.add_date(date.id, listing.id)
+      expect(Listing.available_dates(listing)).to include date
+    end
+    end
+  end
 end
