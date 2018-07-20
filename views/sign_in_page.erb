@@ -1,31 +1,22 @@
 <head><link rel="stylesheet" type='text/css' href="/sign_in_page.css">
-<link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'></head>
+  <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
 <body>
 
-<div>MakersBnB</div>
+  <div class='top'>
+    <form class ='log_in' action="/new_session" method="post">
+      <input type="text" name="username" placeholder="Username">
+      <input type="password" name="password" placeholder="Password">
+      <input type="submit" value="Log In">
+    </form>
 
-<h2> To get set up and staying in the home of your dreams, please sign in below.</h2>
+    <form class='new_account' action="/new_user" method="post">
+      <input type='text' name='new_username' placeholder="Username">
+      <input type='text' name='new_password' placeholder="Password">
+      <input type='submit' value='Create Account'>
+    </form>
+  </div>
 
-<form action="/new_session" method="post">
-  <h4>Username:</h4>
-  <input type="text" name="username">
-  <h4>Password:</h4>
-  <input type="text" name="password">
-
-  <input type="submit" value="Submit">
-</form>
-
-<h2> To Create a New Account, please fill in your details below: </h1>
-  <form action="/new_user" method="post">
-  <h4> Username: </h4>
-  <input type='text' name='new_username'>
-  <h4> Password: </h4>
-  <input type='text' name='new_password'>
-  <input type='submit' value='Create Account'>
-</form>
-
-
-<div style='border: 20px '>
-
-</div>
+  <div class='name'>MakersBnB</div>
 </body>
