@@ -1,4 +1,5 @@
 require_relative 'request'
+require_relative 'listings_dates'
 
 class Listing
 
@@ -53,6 +54,9 @@ class Listing
     Listing.new(result.first['id'], result.first['name'], result.first['owner_id'], result.first['description'], result.first['price'])
   end
 
+  def self.available_dates(listing)
+    ListingsDates.return_dates(listing)
+  end
   # private
   #
   def ==(other)

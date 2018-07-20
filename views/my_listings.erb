@@ -3,11 +3,18 @@
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 
-<div class='welcome'>Welcome, <%= @user.username %>
-<div class='your_listing'>
-  <h3> Your Listings: </h3>
-<p><% @user_listings.each do |listing| %>
-<%= listing.name %> <br/>
+<span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
+<h3> Your Listings: </h3>
+<% @user_listings.each do |listing| %>
+<%= listing.name %>
+<% dates = (Listing.available_dates(listing)) %>
+<% dates.each do |x| %>
+<br>Available on: <%= x.dates %>
+<% end%>
+<!-- # <% ListingsDates.return_dates(listing).each do |object| %>
+# Available on: <%= object.dates %>
+# <% end %> -->
+
 <% end %>
 </p>
 
@@ -36,13 +43,27 @@
 </form>
 <div class='new_listing'>
 <form action='/add_listing' method='POST'>
-  New Listing:
-  <input type='text' name='name' placeholder="Name">
-  <input type='text' name='description' placeholder="Description">
-  <input type='text' name='price' placeholder='Price'>
+  Name: <input type='text' name='name'>
+  Description: <input type='text' name='description'>
+  Price: <input type='text' name='price'>
+  Date: <input type='text' name='date'>
+
   <input type='submit' value='Add Listing'>
 </form>
 </div>
 </div>
 
+
+
+<!--
+<div class='welcome'>Welcome, <%= @user.username %>
+<div class='your_listing'>
+  <h3> Your Listings: </h3>
+<p><% @user_listings.each do |listing| %>
+<%= listing.name %> <br/> -->
+
+<!-- New Listing:
+  <input type='text' name='name' placeholder="Name">
+  <input type='text' name='description' placeholder="Description">
+  <input type='text' name='price' placeholder='Price'> -->
 </body>
