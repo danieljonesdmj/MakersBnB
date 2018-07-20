@@ -10,9 +10,9 @@ class ListingsDates
     @date_id = date_id
   end
 
-  def self.add_date(dat_id, list_id)
+  def self.add_date(date_id, listing_id)
     ListingsDates.switch_database
-    result = @connection.exec("INSERT INTO listings_dates (date_id, listing_id) VALUES('#{dat_id}','#{list_id}') RETURNING id, date_id, listing_id")
+    result = @connection.exec("INSERT INTO listings_dates (date_id, listing_id) VALUES('#{date_id}','#{listing_id}') RETURNING id, date_id, listing_id")
     (result.map { |date| ListingsDates.new(date['id'], date['listing_id'], date['date_id']) })
     # ListingsDates.new(result.first['id'],result.first['date_id'],result.first['listing_id'])
   end
