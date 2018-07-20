@@ -12,6 +12,11 @@
 <h4>Price Per Night: £<%= listing.price %></h4>
 <h4>Host: <%= (User.retrieve(listing.owner_id)).username %></h4>
 
+<% dates = (Listing.available_dates(listing)) %>
+<% dates.each do |x| %>
+<h4>Available on: <%= x.dates %></h4>
+<% end%>
+
 <form action='/<%= listing.id %>/request' method='POST'>
   <input type='hidden' name='_method' value='PATCH'>
   <input type='hidden' name='listing_id' value='<%= listing.id %>'>

@@ -18,17 +18,14 @@ class ListingsDates
 
   def self.return_dates(listing)
     ListingsDates.switch_database
-    # return all dates from listing junction
     result = @connection.exec("SELECT * FROM listings_dates WHERE listing_id='#{listing.id}'")
 
     listings_dates = result.map { |date| ListingsDates.new(date['id'], date['listing_id'], date['date_id'])}
 
-    # wrap each date up as a date object
-
     listings_dates.map do |junction|
       junction.date_id
       date = @connection.exec("SELECT * FROM dates WHERE id='#{junction.date_id}';")
-      Date.new(date.first['id'], date.first['dates'])
+      Dates.new(date.first['id'], date.first['dates'])
         end
   end
 

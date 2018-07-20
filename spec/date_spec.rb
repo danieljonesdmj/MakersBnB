@@ -11,7 +11,7 @@ describe Date do
   describe '.date_id' do
     it 'should return the id of a date in database' do
       dates = Date.create('2018-06-01')
-      expect(Date.date_id('2018-06-01')).to eq(dates.id)
+      expect(Date.dates(dates.id)).to eq dates.dates
     end
   end
 
