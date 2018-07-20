@@ -1,5 +1,8 @@
 require 'pg'
 require './lib/user'
+require './lib/listing'
+require './lib/listings_dates'
+require './lib/date'
 # EF THINK I MAY NEED TO REQUIRE A FILE FROM LIB HERE?
 
 if ENV['RACK_ENV'] != 'production'
@@ -17,7 +20,13 @@ task :setup_databases do
     # when we know what database tables we want:
     connection = PG.connect(dbname: database)
     connection.exec("CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(60), password VARCHAR(60));")
-    connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60));")
+    connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60), owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE, description VARCHAR(200), price INTEGER);")
+    connection.exec("CREATE TABLE requests (id SERIAL PRIMARY KEY, listing_id INTEGER REFERENCES listings(id) ON DELETE CASCADE, requester_id INTEGER REFERENCES users(id) ON DELETE CASCADE, host_id INTEGER REFERENCES users(id), is_requested BOOLEAN, is_approved BOOLEAN);")
+    connection.exec("CREATE TABLE dates (id SERIAL PRIMARY KEY, dates varchar(60));")
+    connection.exec("CREATE TABLE listings_dates (id SERIAL PRIMARY KEY, date_id INTEGER REFERENCES dates(id) ON DELETE CASCADE, listing_id INTEGER REFERENCES listings(id) ON DELETE CASCADE);")
+
+
+
   end
 end
 
@@ -26,12 +35,17 @@ task :reset_test_tables do
   p 'Resetting database...'
   connection = PG.connect(dbname: 'makers_bnb_test')
   # clear the users and peeps tables:
-  connection.exec("TRUNCATE users, listings;")
+  connection.exec("TRUNCATE users, listings, requests, dates, listings_dates;")
   # add some test data, for example:
-  User.add('Daniel', 'pa$$word1')
-  User.add('Layth', 'pa$$w0rd2')
-  User.add('Eli', 'pa$$w0rd3')
+  user1 = User.add('Daniel', 'pa$$word1')
+  user2 = User.add('Layth', 'pa$$w0rd2')
+  user3 = User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
+  Listing.create('Penthouse flat in New York', user1.id, 'Sip a cocktail in front of the Manhattan skyline', 200)
+  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id, 'Switch off, relax and live the hygge dream', 100)
+  Listing.create('Chateau on French Alps', user3.id, 'Skiing by day, vintage wines by night', 150)
+  date = Dates.create("1/1/1")
+  ListingsDates.add_date(date.id, listing.id)
 end
 
 task :reset_dev_tables do
@@ -40,16 +54,18 @@ task :reset_dev_tables do
   confirm = STDIN.gets.chomp
   return unless confirm == 'y'
   connection = PG.connect(dbname: 'makers_bnb')
-  connection.exec("TRUNCATE users, listings;")
+  connection.exec("TRUNCATE users, listings, requests, dates, listings_dates;")
   # add some test data, for example:
-  User.add('Daniel', 'pa$$word1')
-  User.add('Layth', 'pa$$w0rd2')
-  User.add('Eli', 'pa$$w0rd3')
+  user1 = User.add('Daniel', 'pa$$word1')
+  user2 = User.add('Layth', 'pa$$w0rd2')
+  user3 = User.add('Eli', 'pa$$w0rd3')
   User.add('Ben', 'pa$$w0rd4')
-  # User.create('test', 'test', 'test', 'test')
-  # Peep.create(han.id, 'Laugh it up fuzzball.')
-  # Peep.create(luke.id, 'Im Luke Skywalker. Im here to rescue you!')
-  # Peep.create(leia.id, 'Help me Obiwan Kenobi. Youre my only hope.')
+  listing = Listing.create('Penthouse flat in New York', user1.id, 'Sip a cocktail in front of the Manhattan skyline', 200)
+  Listing.create('Secluded wood cabin in Sweden with Sauna', user2.id, 'Switch off, relax and live the hygge dream', 100)
+  Listing.create('Chateau on French Alps', user3.id, 'Skiing by day, vintage wines by night', 150)
+  p date = Dates.create('1/1/1')
+  p date.id
+  ListingsDates.add_date(date.id, listing.id)
 end
 
 task :teardown do

@@ -1,0 +1,22 @@
+<head><link rel="stylesheet" type='text/css' href="/sign_in_page.css">
+  <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+
+  <div class='top'>
+    <form class ='log_in' action="/new_session" method="post">
+      <input type="text" name="username" placeholder="Username">
+      <input type="password" name="password" placeholder="Password">
+      <input type="submit" value="Log In">
+    </form>
+
+    <form class='new_account' action="/new_user" method="post">
+      <input type='text' name='new_username' placeholder="Username">
+      <input type='text' name='new_password' placeholder="Password">
+      <input type='submit' value='Create Account'>
+    </form>
+  </div>
+
+  <div class='name'>MakersBnB</div>
+</body>

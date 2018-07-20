@@ -1,0 +1,29 @@
+body {
+  background-image: url("https://images.pexels.com/photos/789381/pexels-photo-789381.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  font-family: Montserrat;
+}
+
+.name {
+  font-family: Merienda;
+  font-size: 80px;
+  position: fixed;
+  top: 6%;
+  left: 35%;
+}
+
+form.log_in {
+  position: fixed;
+  left: 10px;
+  font-size: 20px;
+
+}
+
+
+form.new_account {
+  position: fixed;
+  right: 10px;
+  font-size: 20px;
+}
