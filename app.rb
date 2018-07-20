@@ -35,7 +35,7 @@ class MakersBNB < Sinatra::Base
     @user_listings = Listing.user_listings(session[:id])
     requests = Request.my_requests(@user.id)
     @my_requests = requests.map {|request| Listing.retrieve_listing(request.listing_id)}
-    p @available_dates = @user_listings.map { |listing| ListingsDates.return_dates(listing)}
+    @available_dates = @user_listings.map { |listing| ListingsDates.return_dates(listing)}
     erb :my_listings
   end
 
@@ -75,7 +75,7 @@ class MakersBNB < Sinatra::Base
   end
 
   patch '/:id/approve' do
-    p id = params[:request_id]
+    id = params[:request_id]
     Request.approve(id)
     redirect("/'#{params[:request_id]}'/approve")
   end
@@ -90,11 +90,10 @@ class MakersBNB < Sinatra::Base
   end
 
   post '/add_listing' do
-    p params[:date]
+    params[:date]
     listing = Listing.create(params[:name], session[:id], params[:description], params[:price])
     date = Dates.create(params[:date])
-    date.id
-    p ListingsDates.add_date((date.id).to_i, listing.id)
+    ListingsDates.add_date((date.id).to_i, listing.id)
 
     redirect ("/#{session[:id]}/my_listings")
   end
