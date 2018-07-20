@@ -2,7 +2,7 @@ require "listings_dates"
 
 describe ListingsDates do
 
-  describe '.create' do
+  describe '.add_date' do
     it 'adds a date to a listing' do
       date = Date.create('2018-01-01')
       user = User.add('John', 'JPassword')
@@ -25,5 +25,26 @@ describe ListingsDates do
     end
   end
 
+  describe '.add_listing' do
+    it 'adds a listing to a date' do
+      date = Date.create('2018-01-01')
+      user = User.add('John', 'JPassword')
+      listing = Listing.create("name", user.id, "description", 100)
+      ListingsDates.add_listing(listing.id, date.id)
+      expect(ListingsDates.return_listings(date)).to eq [listing]
+    end
+  end
 
+  describe '#return_listings(date)' do
+    it 'returns all the listings of a specific date' do
+      date = Date.create('2018-01-01')
+      user = User.add('John', 'JPassword')
+      listing1 = Listing.create("name", user.id, "description", 100)
+      listing2 = Listing.create("name", user.id, "description", 100)
+      ListingsDates.add_listing(listing1.id, date.id)
+      ListingsDates.add_listing(listing2.id, date.id)
+      expect(ListingsDates.return_listings(date)).to eq [listing1, listing2]
+
+    end
+  end
 end

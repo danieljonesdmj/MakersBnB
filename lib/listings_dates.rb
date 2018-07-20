@@ -13,8 +13,7 @@ class ListingsDates
   def self.add_date(date_id, listing_id)
     ListingsDates.switch_database
     result = @connection.exec("INSERT INTO listings_dates (date_id, listing_id) VALUES('#{date_id}','#{listing_id}') RETURNING id, date_id, listing_id")
-    (result.map { |date| ListingsDates.new(date['id'], date['listing_id'], date['date_id']) })
-    # ListingsDates.new(result.first['id'],result.first['date_id'],result.first['listing_id'])
+    result.map { |date| ListingsDates.new(date['id'], date['listing_id'], date['date_id']) }
   end
 
   def self.return_dates(listing)
@@ -30,6 +29,27 @@ class ListingsDates
       junction.date_id
       date = @connection.exec("SELECT * FROM dates WHERE id='#{junction.date_id}';")
       Date.new(date.first['id'], date.first['dates'])
+        end
+  end
+
+  def self.add_listing(listing_id, date_id)
+    ListingsDates.switch_database
+    result = @connection.exec("INSERT INTO listings_dates (date_id, listing_id) VALUES('#{date_id}','#{listing_id}') RETURNING id, date_id, listing_id")
+    result.map { |date| ListingsDates.new(date['id'], date['listing_id'], date['date_id']) }
+  end
+
+  def self.return_listings(date)
+    ListingsDates.switch_database
+    # return all dates from listing junction
+    result = @connection.exec("SELECT * FROM listings_dates WHERE date_id='#{date.id}'")
+
+    listings_dates = result.map { |date| ListingsDates.new(date['id'], date['listing_id'], date['date_id'])}
+
+    # wrap each date up as a date object
+
+    listings_dates.map do |junction|
+      listing = @connection.exec("SELECT * FROM listings WHERE id='#{junction.listing_id}';")
+      Listing.new(listing.first['id'], listing.first['name'], listing.first['owner_id'], listing.first['description'], listing.first['price'])
         end
   end
 
