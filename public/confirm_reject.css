@@ -1,0 +1,16 @@
+body {
+  background-image: url("https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  font-family: Montserrat;
+}
+
+div {
+  position: fixed;
+  left: 20px;
+}
+
+h1 {
+  color: pink;
+}

@@ -1,0 +1,12 @@
+body {
+  background-image: url("https://images.pexels.com/photos/176395/pexels-photo-176395.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  font-family: Montserrat;
+}
+
+div {
+  position: fixed;
+  bottom: 0px;
+}
