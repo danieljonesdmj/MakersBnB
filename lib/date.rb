@@ -18,6 +18,15 @@ class Date
     result.first['id']
   end
 
+  def self.dates(date_id)
+    Date.switch_database
+    result = @connection.exec("SELECT * FROM dates WHERE id='#{date_id}';")
+    result.first['dates']
+  end
+
+  def ==(other)
+    @id == other.id
+  end
   private
 
   def self.switch_database
