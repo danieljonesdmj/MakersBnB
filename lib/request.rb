@@ -38,13 +38,13 @@ class Request
   def self.available
     # returns all available listings
     Request.switch_database
-    result = @connection.exec("SELECT * FROM requests WHERE is_requested=FALSE")
+    result = @connection.exec("SELECT * FROM requests WHERE is_requested = FALSE")
     result.map {|request| Request.new(request['id'], request['listing_id'], request['requester_id'], request['host_id'], request['is_requested'], request['is_approved'])}
   end
 
   def self.my_requests(user_id)
     Request.switch_database
-    result = @connection.exec("SELECT * FROM requests WHERE host_id='#{user_id}'")
+    result = @connection.exec("SELECT * FROM requests WHERE host_id='#{user_id}' AND is_requested = TRUE")
     result.map {|request| Request.new(request['id'], request['listing_id'], request['requester_id'], request['host_id'], request['is_requested'], request['is_approved'])}
   end
 

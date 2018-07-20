@@ -44,13 +44,13 @@ class Listing
     # retrieves all listings except those the owner is hosting
     Listing.switch_database
     result = @connection.exec("SELECT * FROM listings WHERE owner_id!='#{owner_id}'")
-    result.map { |listing| Listing.new(listing['id'], listing['name'], listing['owner_id'])}
+    result.map { |listing| Listing.new(listing['id'], listing['name'], listing['owner_id'], result.first['description'], result.first['price'])}
   end
 
   def self.retrieve_listing(listing_id)
     Listing.switch_database
     result = @connection.exec("SELECT * FROM listings WHERE id='#{listing_id}'")
-    Listing.new(result.first['id'], result.first['name'], result.first['owner_id'])
+    Listing.new(result.first['id'], result.first['name'], result.first['owner_id'], result.first['description'], result.first['price'])
   end
 
   # private

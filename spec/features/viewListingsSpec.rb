@@ -14,6 +14,8 @@ feature 'View All Listings' do
     click_button('Submit')
     click_button('My Listings')
     fill_in('name', :with => 'House in The Wirral')
+    fill_in('description', :with => 'Woolie-backs only')
+    fill_in('price', :with => '999')
     click_button('Add Listing')
     click_button('All Listings')
     expect(page).to have_content 'House in The Wirral (your space)'
@@ -45,6 +47,8 @@ feature 'View All Listings' do
     click_button('Submit')
     click_button('My Listings')
     fill_in('name', :with => 'House in The Wirral')
+    fill_in('description', :with => 'Woolie-backs only')
+    fill_in('price', :with => '999')
     click_button('Add Listing')
     expect(page).to have_content 'House in The Wirral'
   end
