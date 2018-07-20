@@ -1,4 +1,7 @@
-<body  background="https://www.vacanceole.com/wp-content/uploads/MONT-ST-MICHEL.jpg">
+<head><link rel="stylesheet" type='text/css' href="/listings.css">
+  <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
 
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
 <h1> All Listings: </h1>
@@ -25,14 +28,33 @@
 <% end %>
 <% end %>
 
-<form action='/<%= @user.id %>/my_listings' method='GET'>
-  <input type='submit' value='My Listings'>
-</form>
+<div class='listings'>Available spaces
+<% @listings.each do |listing| %>
+  <% if listing.owner_id == @user.id %>
+  <div class='your_space'> <%= listing.name %> </div>
+  <% else %>
 
-<form action='/' method='GET'>
-  <input type='submit' value='Sign Out'>
-</form>
-<div style='border: 20px '>
+  <h3><u><%= listing.name %></u></h3>
+  <h4>Description: <%= listing.description %></h4>
+  <h4>Price Per Night: £<%= listing.price %></h4>
+  <h4>Host: <%= (User.retrieve(listing.owner_id)).username %></h4>
 
+  <form action='/<%= listing.id %>/request' method='POST'>
+    <input type='hidden' name='_method' value='PATCH'>
+    <input type='hidden' name='listing_id' value='<%= listing.id %>'>
+    <input type='submit' value='Request <%=listing.name %>'>
+  </form>
+  <% end %>
+  <% end %>
 </div>
+
+<!-- <div class='welcome'> Welcome, <%= @user.username %> </div>
+  <div class='welcome_buttons'>
+    <form action='/<%= @user.id %>/my_listings' method='GET'>
+    <input type='submit' value='My Listings'>
+  </form>
+  <form action='/' method='GET'>
+    <input type='submit' value='Sign Out'>
+  </form></div>
+</div> -->
 </body>

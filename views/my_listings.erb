@@ -1,4 +1,7 @@
-<body  background="https://www.vacanceole.com/wp-content/uploads/MONT-ST-MICHEL.jpg">
+<head><link rel="stylesheet" type='text/css' href="/my_listings.css">
+  <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
 
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
 <h3> Your Listings: </h3>
@@ -13,6 +16,7 @@
 # <% end %> -->
 
 <% end %>
+</p>
 
 <h3> Your Requests: </h3>
 <% @my_requests.each do |request| %>
@@ -31,24 +35,35 @@
       <input type='hidden' name='request_id' value='<%= request.id %>'>
       <input type='submit' value='Reject'>
     </form>
-
 <% end %>
 <% end %>
 
 <form action='/<%= @user.id %>/all_listings' method='GET'>
   <input type='submit' value='All Listings'>
 </form>
-
-<h3>New Listing: </h3>
+<div class='new_listing'>
 <form action='/add_listing' method='POST'>
   Name: <input type='text' name='name'>
   Description: <input type='text' name='description'>
   Price: <input type='text' name='price'>
   Date: <input type='text' name='date'>
+
   <input type='submit' value='Add Listing'>
 </form>
-
-<div style='border: 20px '>
-
 </div>
+</div>
+
+
+
+<!--
+<div class='welcome'>Welcome, <%= @user.username %>
+<div class='your_listing'>
+  <h3> Your Listings: </h3>
+<p><% @user_listings.each do |listing| %>
+<%= listing.name %> <br/> -->
+
+<!-- New Listing:
+  <input type='text' name='name' placeholder="Name">
+  <input type='text' name='description' placeholder="Description">
+  <input type='text' name='price' placeholder='Price'> -->
 </body>
