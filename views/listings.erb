@@ -3,7 +3,21 @@
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
 <h1> All Listings: </h1>
 <% @listings.each do |listing| %>
-<br><%= listing.name %></br>
+<% if listing.owner_id == @user.id %>
+<h3><%= listing.name %> (your space)</h3>
+<% else %>
+
+<h3><u><%= listing.name %></u></h3>
+<h4>Description: <%= listing.description %></h4>
+<h4>Price Per Night: £<%= listing.price %></h4>
+<h4>Host: <%= (User.retrieve(listing.owner_id)).username %></h4>
+
+<form action='/<%= listing.id %>/request' method='POST'>
+  <input type='hidden' name='_method' value='PATCH'>
+  <input type='hidden' name='listing_id' value='<%= listing.id %>'>
+  <input type='submit' value='Request <%=listing.name %>'>
+</form>
+<% end %>
 <% end %>
 
 <form action='/<%= @user.id %>/my_listings' method='GET'>

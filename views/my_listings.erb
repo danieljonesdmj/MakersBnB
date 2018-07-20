@@ -1,17 +1,41 @@
 <body  background="https://www.vacanceole.com/wp-content/uploads/MONT-ST-MICHEL.jpg">
 
 <span style="text-decoration: underline; color: #0099ff; font-family:courier"> <h1> Welcome, <%= @user.username %> </h1> </span>
-<h1> Your Listings: </h1>
+<h3> Your Listings: </h3>
 <% @user_listings.each do |listing| %>
-<br><%= listing.name %></br>
+<%= listing.name %>
+<% end %>
+
+<h3> Your Requests: </h3>
+<% @my_requests.each do |request| %>
+  <% if (Request.return_request(request.id)).is_approved == "t" %>
+    <u><%= request.name %> (approved)</u>
+  <% else %>
+    <u><%= request.name %></u>
+    Requested by: <%= (User.retrieve((Request.return_request(request.id)).requester_id)).username %>
+    <form action='/<%= request.id %>/approve' method='POST'>
+      <input type='hidden' name='_method' value='PATCH'>
+      <input type='hidden' name='request_id' value='<%= request.id %>'>
+      <input type='submit' value='Approve'>
+    </form>
+    <form action='/<%= request.id %>/reject' method='POST'>
+      <input type='hidden' name='_method' value='PATCH'>
+      <input type='hidden' name='request_id' value='<%= request.id %>'>
+      <input type='submit' value='Reject'>
+    </form>
+
+<% end %>
 <% end %>
 
 <form action='/<%= @user.id %>/all_listings' method='GET'>
   <input type='submit' value='All Listings'>
 </form>
 
+<h3>New Listing: </h3>
 <form action='/add_listing' method='POST'>
-  <input type='text' name='name'>
+  Name: <input type='text' name='name'>
+  Description: <input type='text' name='description'>
+  Price: <input type='text' name='price'>
   <input type='submit' value='Add Listing'>
 </form>
 

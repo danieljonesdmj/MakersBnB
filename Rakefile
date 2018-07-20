@@ -19,9 +19,12 @@ task :setup_databases do
     connection = PG.connect(dbname: database)
     connection.exec("CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(60), password VARCHAR(60));")
     connection.exec("CREATE TABLE listings (id SERIAL PRIMARY KEY, name VARCHAR(60), owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE, description VARCHAR(200), price INTEGER);")
-    connection.exec("CREATE TABLE requests (id SERIAL PRIMARY KEY, listing_id INTEGER REFERENCES listings(id) ON DELETE CASCADE, requester_id INTEGER REFERENCES users(id) ON DELETE CASCADE, is_approved BOOLEAN);")
+    connection.exec("CREATE TABLE requests (id SERIAL PRIMARY KEY, listing_id INTEGER REFERENCES listings(id) ON DELETE CASCADE, requester_id INTEGER REFERENCES users(id) ON DELETE CASCADE, host_id INTEGER REFERENCES users(id), is_requested BOOLEAN, is_approved BOOLEAN);")
     connection.exec("CREATE TABLE dates (id SERIAL PRIMARY KEY, dates DATE);")
     connection.exec("CREATE TABLE listings_dates (id SERIAL PRIMARY KEY, date_id INTEGER REFERENCES listings(id) ON DELETE CASCADE, listing_id INTEGER REFERENCES dates(id) ON DELETE CASCADE);")
+
+
+
   end
 end
 

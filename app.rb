@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require './lib/user'
 require './lib/listing'
+require './lib/request'
 
 class MakersBNB < Sinatra::Base
   set :method_override, true
@@ -14,8 +15,16 @@ class MakersBNB < Sinatra::Base
   get '/:id/all_listings' do
     # Assign user to User object
     @user = User.retrieve(session[:id]) # Method not written yet
-    # Assign listings to array of listings objects
-    @listings = Listing.all
+    # Assign listings to array of available listings...
+    # @listings = Listing.retrieve_other(session[:id])
+    requests = Request.available
+    # available_requests = []
+    # requests.each {|request|
+    #    if request.user_id != @user.id
+    #      available_requests.push(request)
+    #    end
+    # }
+    @listings= requests.map {|request| Listing.retrieve_listing(request.listing_id)}
     # :listings view should pull User and Listings info and show on page
     erb :listings
   end
@@ -23,7 +32,24 @@ class MakersBNB < Sinatra::Base
   get '/:id/my_listings' do
     @user = User.retrieve(session[:id])
     @user_listings = Listing.user_listings(session[:id])
+    requests = Request.my_requests(@user.id)
+    @my_requests = requests.map {|request| Listing.retrieve_listing(request.listing_id)}
     erb :my_listings
+  end
+
+  get '/:id/confirm_request' do
+    @user = User.retrieve(session[:id])
+    erb :confirm_request
+  end
+
+  get '/:id/approve' do
+    @user = User.retrieve(session[:id])
+    erb :confirm_approve
+  end
+
+  get '/:id/reject' do
+    @user = User.retrieve(session[:id])
+    erb :confirm_reject
   end
 
   post '/new_session' do
@@ -41,15 +67,35 @@ class MakersBNB < Sinatra::Base
 
   end
 
+  patch '/:id/reject' do
+    Request.reject(params[:request_id])
+    redirect("/'#{params[:request_id]}'/reject")
+  end
+
+  patch '/:id/approve' do
+    p id = params[:request_id]
+    Request.approve(id)
+    redirect("/'#{params[:request_id]}'/approve")
+  end
+
+  patch '/:id/request' do
+    params[:listing_id]
+    user = User.retrieve(session[:id])
+    listing = Listing.retrieve_listing(params[:listing_id])
+    request = Request.make_request(params[:listing_id], user.id)
+    # p Request.make_request(listing.id, user.id)
+    redirect "/'#{listing.id}'/confirm_request"
+  end
+
   post '/add_listing' do
-    listing = Listing.create(params[:name], session[:id])
-    redirect ("/#{session[:id]}/all_listings")
+    listing = Listing.create(params[:name], session[:id], params[:description], params[:price])
+    redirect ("/#{session[:id]}/my_listings")
   end
 
   post '/new_user' do
     user = User.add(params[:new_username], params[:new_password])
     session[:id] = user.id
-    redirect "/#{user.id}/all_listings"
+    redirect "/#{user.id}/my_listings"
   end
 
   run! if app_file == $0
